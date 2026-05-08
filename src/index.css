@@ -8,3 +8,14 @@
     font-family: 'Playfair Display', serif !important;
   }
 }
+.sidebar-link {
+  padding: 10px 12px;
+  border-radius: 6px;
+  transition: 0.3s;
+  font-size: 14px;
+}
+
+.sidebar-link:hover {
+  background-color: #d4af37;
+  color: black;
+}

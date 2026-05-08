@@ -9,7 +9,17 @@ function Landing() {
   return (
     <div className="min-h-screen font-sans bg-black text-[#d4af37]">
 
-
+    <div className="fixed top-6 right-6 z-50">
+    <Link
+    to="/login"
+    className="border border-[#d4af37] text-dark px-6 py-2 text-xs uppercase tracking-widest font-semibold 
+               bg-black/40 backdrop-blur-md
+               hover:bg-[#d4af37] hover:text-black 
+               transition-all duration-300 shadow-lg "
+    >
+    HMS Login
+    </Link>
+</div>
       {/* Cinematic Hero Section */}
       <div className="relative h-[80vh] flex items-center justify-center text-center px-4 overflow-hidden">
         <div className="absolute inset-0 z-0">
