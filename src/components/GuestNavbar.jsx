@@ -1,69 +1,127 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { images } from '../data/assets';
-import { FaPhoneAlt, FaEnvelope, FaBars, FaAngleDown } from 'react-icons/fa';
+import {
+  FaPhoneAlt, FaEnvelope, FaBars, FaTimes,
+  FaAngleDown, FaBed, FaUtensils, FaGlassMartini, FaLock
+} from 'react-icons/fa';
+
+const NAV_LINKS = [
+  { label: 'Home',    to: '/' },
+  { label: 'About',   to: '/#about' },
+  { label: 'Offers',  to: '/#offers' },
+  { label: 'Reviews', to: '/#reviews' },
+  { label: 'Contact', to: '/#contact' },
+];
+
+
 
 function GuestNavbar() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled]     = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => { setMobileOpen(false); }, [location]);
+
+  const isActive = (path) => {
+    if (path === '/') return location.pathname === '/' && !location.hash;
+    if (path.startsWith('/#')) return location.pathname === '/' && location.hash === path.slice(1);
+    return location.pathname === path || location.pathname.startsWith(path + '/');
+  };
 
   return (
     <>
-      {/* Top Header / Contact Info */}
-      <div className="bg-[#111] text-[#d4af37] py-2 px-8 text-xs flex justify-between items-center hidden md:flex font-light tracking-wider border-b border-[#333]">
-        <div className="flex gap-6">
-          <span className="flex items-center gap-2"><FaPhoneAlt /> +91 44 4391 1000</span>
-          <span className="flex items-center gap-2"><FaEnvelope /> info@dremorestays.com</span>
+      {/* ── Top contact bar — hidden HMS admin lock at far right ── */}
+      <div className="hidden md:flex bg-[#050505] text-[#d4af37] py-2 px-8 text-xs justify-between items-center font-light tracking-wider border-b border-[#1a1a1a]">
+        <div className="flex gap-8">
+          <span className="flex items-center gap-2 cursor-default hover:text-white transition-colors">
+            <FaPhoneAlt className="text-[10px]" /> +91 6346 961 630
+          </span>
+          <span className="flex items-center gap-2 cursor-default hover:text-white transition-colors">
+            <FaEnvelope className="text-[10px]" /> info@dremorestays.com
+          </span>
         </div>
-        <div className="flex gap-6">
-          <Link to="/login" className="hover:text-white transition-colors uppercase">Manage Booking</Link>
-          <Link to="/login" className="hover:text-white transition-colors uppercase">Login Portal</Link>
-        </div>
+        {/* Hidden staff portal — nearly invisible lock icon */}
+        <Link
+          to="/login"
+          id="admin-portal-trigger"
+          title="Staff Portal"
+          aria-label="Staff Portal Access"
+          className="text-[#2a2a2a] hover:text-[#d4af37]/50 transition-colors duration-500 text-[11px]"
+        >
+          <FaLock />
+        </Link>
       </div>
 
-      {/* Main Navigation */}
-      <nav className="sticky top-0 w-full z-50 bg-black shadow-md border-b border-[#333] px-4 md:px-8 py-4 flex justify-between items-center">
-        <div className="flex items-center gap-4">
-          <Link to="/" className="flex items-center gap-4">
-            <img src={images.logo} alt="DREMORE STAYS Logo" className="h-12 w-auto object-contain" />
-            <div className="flex flex-col">
-              <h1 className="text-2xl md:text-3xl font-serif text-[#d4af37] tracking-widest uppercase">DREMORE STAYS</h1>
-              <span className="text-[10px] tracking-[0.3em] text-white uppercase">Stay beyond dreams</span>
+      {/* ── Main Navbar ── */}
+      <nav className={`sticky top-0 w-full z-50 portal-nav ${scrolled ? 'scrolled' : ''}`}>
+        <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between h-16 md:h-[72px]">
+
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-3 shrink-0 group" style={{textDecoration:'none'}}>
+            <img
+              src={images.logo}
+              alt="Dremora Stays"
+              className="h-10 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
+            />
+            <div className="flex flex-col leading-tight">
+              <span className="text-lg md:text-xl font-serif text-[#d4af37] tracking-widest uppercase" style={{textDecoration:'none'}}>
+                DREMORA STAYS
+              </span>
+              <span className="text-[9px] tracking-[0.3em] text-gray-500 uppercase hidden md:block">
+                Stay beyond dreams
+              </span>
             </div>
           </Link>
-        </div>
-        <div className="hidden lg:flex gap-8 items-center text-sm font-medium text-white">
-          <Link to="/" className="hover:text-[#d4af37] transition-colors uppercase tracking-widest">Home</Link>
-          <a href="/#about" className="hover:text-[#d4af37] transition-colors uppercase tracking-widest">About Us</a>
-          
-          {/* Gallery Dropdown */}
-          <div className="group relative">
-            <button className="flex items-center gap-1 hover:text-[#d4af37] transition-colors uppercase tracking-widest">
-              Gallery <FaAngleDown />
-            </button>
-            <div className="absolute top-full left-0 mt-2 w-48 bg-[#111] border border-[#333] shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all flex flex-col z-50">
-              <a href="/#gallery-foods" className="px-4 py-3 hover:bg-[#222] hover:text-[#d4af37] border-b border-[#333] tracking-widest text-xs uppercase">Foods</a>
-              <a href="/#gallery-rooms" className="px-4 py-3 hover:bg-[#222] hover:text-[#d4af37] border-b border-[#333] tracking-widest text-xs uppercase">Rooms</a>
-              <a href="/#gallery-banquet" className="px-4 py-3 hover:bg-[#222] hover:text-[#d4af37] tracking-widest text-xs uppercase">Banquet Halls</a>
-            </div>
+
+          {/* ── Desktop links ── */}
+          <div className="hidden lg:flex items-center gap-6">
+            {NAV_LINKS.map(link =>
+              link.to.startsWith('/#')
+                ? <a key={link.to} href={link.to} className={`nav-link ${isActive(link.to) ? 'active' : ''}`}>{link.label}</a>
+                : <Link key={link.to} to={link.to} className={`nav-link ${isActive(link.to) ? 'active' : ''}`}>{link.label}</Link>
+            )}
+
+            {/* Order Now + Book Now CTA buttons */}
+            <Link to="/guest/foods" className="gold-outline-btn px-5 py-2.5 rounded-sm text-xs">
+              Order Now
+            </Link>
+            <Link to="/guest/booking" className="gold-btn px-5 py-2.5 rounded-sm text-xs">
+              Book Now
+            </Link>
           </div>
 
-          <a href="/#offers" className="hover:text-[#d4af37] transition-colors uppercase tracking-widest">Offers</a>
-          
-          {/* Booking Dropdown */}
-          <div className="group relative">
-            <button className="bg-[#d4af37] text-black px-6 py-3 rounded-sm text-sm tracking-widest uppercase hover:bg-white transition-all flex items-center gap-2 font-bold">
-              Book Now <FaAngleDown />
-            </button>
-            <div className="absolute top-full right-0 mt-2 w-56 bg-[#111] border border-[#d4af37] shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all flex flex-col z-50">
-              <Link to="/guest/rooms" className="px-4 py-3 hover:bg-[#222] text-white hover:text-[#d4af37] border-b border-[#333] tracking-widest text-xs uppercase font-semibold">Book Room</Link>
-              <Link to="/guest/events" className="px-4 py-3 hover:bg-[#222] text-white hover:text-[#d4af37] border-b border-[#333] tracking-widest text-xs uppercase font-semibold">Book Banquet Hall</Link>
-              <Link to="/guest/restaurant" className="px-4 py-3 hover:bg-[#222] text-white hover:text-[#d4af37] tracking-widest text-xs uppercase font-semibold">Reserve Restaurant Table</Link>
-            </div>
+          {/* Mobile toggle */}
+          <button
+            className="lg:hidden text-[#d4af37] text-2xl p-2 focus:outline-none"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Toggle menu"
+          >
+            {mobileOpen ? <FaTimes /> : <FaBars />}
+          </button>
+        </div>
+
+        {/* ── Mobile Menu ── */}
+        {mobileOpen && (
+          <div className="mobile-menu lg:hidden border-t border-[#222] max-h-[80vh] overflow-y-auto">
+            {NAV_LINKS.map(link =>
+              link.to.startsWith('/#')
+                ? <a key={link.to} href={link.to} className="mobile-link">{link.label}</a>
+                : <Link key={link.to} to={link.to} className={`mobile-link ${isActive(link.to) ? 'active' : ''}`}>{link.label}</Link>
+            )}
+
+            <Link to="/guest/foods" className="mobile-link">Order Now</Link>
+            <Link to="/guest/booking" className="mobile-link gold-btn text-center rounded-sm text-xs py-3 mx-4 mb-2 block">
+              Book Now
+            </Link>
           </div>
-        </div>
-        <div className="lg:hidden text-2xl text-[#d4af37] cursor-pointer" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-          <FaBars />
-        </div>
+        )}
       </nav>
     </>
   );

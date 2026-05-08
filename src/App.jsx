@@ -5,6 +5,15 @@ import Login from "./pages/auth/Login";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
 
+// ✅ GUEST LAYOUT + PAGES
+import GuestLayout from "./layouts/GuestLayout";
+import GuestRooms from "./pages/guest/GuestRooms";
+import GuestRestaurant from "./pages/guest/GuestRestaurant";
+import GuestEvents from "./pages/guest/GuestEvents";
+import GuestFoodMenu from "./pages/guest/GuestFoodMenu";
+import GuestBooking from "./pages/guest/GuestBooking";
+import GuestOffers from "./pages/guest/GuestOffers";
+
 // ✅ ADMIN
 import DashboardLayout from "./pages/DashboardLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -12,15 +21,9 @@ import ManageRooms from "./pages/admin/ManageRooms";
 import ManageUsers from "./pages/admin/ManageUsers";
 import Reports from "./pages/admin/Reports";
 
-
 import ReceptionDashboard from "./pages/receptionist/ReceptionDashboard";
-
-
 import ManagerDashboard from "./pages/manager/ManagerDashboard";
-
-
 import HRDashboard from "./pages/hr/HRDashboard";
-
 
 import RestaurantDashboard from "./pages/restaurant/RestaurantDashboard";
 import Menu from "./pages/restaurant/Menu";
@@ -33,11 +36,21 @@ function App() {
     <BrowserRouter>
       <Routes>
 
-        {/*  PUBLIC */}
+        {/* PUBLIC */}
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
 
-        {/*  ADMIN — uses <Outlet /> inside DashboardLayout */}
+        {/* GUEST PORTAL — GuestLayout provides Navbar + Footer */}
+        <Route path="/guest" element={<GuestLayout />}>
+          <Route path="booking"    element={<GuestBooking />} />
+          <Route path="rooms"      element={<GuestRooms />} />
+          <Route path="restaurant" element={<GuestRestaurant />} />
+          <Route path="events"     element={<GuestEvents />} />
+          <Route path="foods"      element={<GuestFoodMenu />} />
+          <Route path="offers"     element={<GuestOffers />} />
+        </Route>
+
+        {/* ADMIN */}
         <Route
           path="/admin"
           element={
@@ -47,12 +60,12 @@ function App() {
           }
         >
           <Route index element={<AdminDashboard />} />
-          <Route path="rooms" element={<ManageRooms />} />
-          <Route path="users" element={<ManageUsers />} />
+          <Route path="rooms"   element={<ManageRooms />} />
+          <Route path="users"   element={<ManageUsers />} />
           <Route path="reports" element={<Reports />} />
         </Route>
 
-        {/*  RECEPTION — has internal <Routes>, so /* is required */}
+        {/* RECEPTION */}
         <Route
           path="/reception/*"
           element={
@@ -62,7 +75,7 @@ function App() {
           }
         />
 
-        {/*  MANAGER — has internal <Routes>, so /* is required */}
+        {/* MANAGER */}
         <Route
           path="/manager/*"
           element={
@@ -72,7 +85,7 @@ function App() {
           }
         />
 
-        {/*  HR — has internal <Routes>, so /* is required */}
+        {/* HR */}
         <Route
           path="/hr/*"
           element={
@@ -82,7 +95,7 @@ function App() {
           }
         />
 
-        {/*  RESTAURANT — uses <Outlet />, nested routes defined here */}
+        {/* RESTAURANT STAFF */}
         <Route
           path="/restaurant"
           element={
@@ -91,10 +104,10 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route index element={<Menu />} />
-          <Route path="menu" element={<Menu />} />
-          <Route path="order" element={<TakeOrder />} />
-          <Route path="orders" element={<Orders />} />
+          <Route index         element={<Menu />} />
+          <Route path="menu"    element={<Menu />} />
+          <Route path="order"   element={<TakeOrder />} />
+          <Route path="orders"  element={<Orders />} />
           <Route path="billing" element={<Bill />} />
         </Route>
 
