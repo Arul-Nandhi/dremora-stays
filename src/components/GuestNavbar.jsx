@@ -44,7 +44,7 @@ function GuestNavbar() {
             <FaPhoneAlt className="text-[10px]" /> +91 6346 961 630
           </span>
           <span className="flex items-center gap-2 cursor-default hover:text-white transition-colors">
-            <FaEnvelope className="text-[10px]" /> info@dremorestays.com
+            <FaEnvelope className="text-[10px]" /> info@dremorastays.com
           </span>
         </div>
         {/* Hidden staff portal — nearly invisible lock icon */}

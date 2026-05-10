@@ -28,15 +28,15 @@ function Footer() {
           <ul className="text-gray-500 text-sm space-y-4 font-light">
             <li className="flex gap-3">
               <FaMapMarkerAlt className="text-[#d4af37] shrink-0 mt-1" />
-              <span>431, Palladam , Coimbatore - 641401</span>
+              <a href="https://maps.google.com/?q=431,+Palladam,+Coimbatore+-+641401" target="_blank" rel="noreferrer" className="hover:text-[#d4af37] transition-colors">431, Palladam , Coimbatore - 641401</a>
             </li>
             <li className="flex gap-3 items-center">
               <FaPhoneAlt className="text-[#d4af37]" />
-              <span>+91 6346961630</span>
+              <a href="tel:+916346961630" className="hover:text-[#d4af37] transition-colors">+91 6346961630</a>
             </li>
             <li className="flex gap-3 items-center">
               <FaEnvelope className="text-[#d4af37]" />
-              <span>info@dremorestays.com</span>
+              <a href="mailto:info@dremorastays.com" className="hover:text-[#d4af37] transition-colors">info@dremorastays.com</a>
             </li>
           </ul>
         </div>
