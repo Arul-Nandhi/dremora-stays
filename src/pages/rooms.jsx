@@ -3,6 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { images } from '../data/assets';
 import { FaWifi, FaTv, FaCoffee, FaBed, FaUserFriends, FaTimes, FaCheckCircle, FaCalendarAlt } from 'react-icons/fa';
 
+const TIME_SLOTS = [
+  '07:00','08:00','09:00','10:00','11:00','12:00',
+  '13:00','14:00','15:00','16:00','17:00','18:00',
+  '19:00','20:00','21:00','22:00','23:00',
+];
+
 const roomData = [
   { type: "Presidential Suite", price: 1200, beds: "1 King Bed", guests: 4, size: "1,200 sq.ft", view: "Panoramic City", status: "Available" },
   { type: "Ocean Villa", price: 850, beds: "1 King Bed", guests: 2, size: "950 sq.ft", view: "Ocean Front", status: "Occupied" },
@@ -60,7 +66,7 @@ function Rooms({ role = 'admin' }) {
           <p className="text-gray-400 tracking-wide">
             {role === 'admin' 
               ? 'Manage availability, pricing, and room assignments.' 
-              : 'Discover and book your perfect Dremore retreat.'}
+              : 'Discover and book your perfect Dremora retreat.'}
           </p>
         </div>
 
@@ -216,11 +222,17 @@ function Rooms({ role = 'admin' }) {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs uppercase tracking-widest text-gray-500 mb-1">Time In (Optional)</label>
-                      <input type="time" className="w-full bg-black border border-[#333] text-white p-3 focus:outline-none focus:border-[#d4af37]" />
+                      <select className="w-full bg-black border border-[#333] text-white p-3 focus:outline-none focus:border-[#d4af37]">
+                        <option value="">Select a time</option>
+                        {TIME_SLOTS.map(t => <option key={t} value={t}>{t}</option>)}
+                      </select>
                     </div>
                     <div>
                       <label className="block text-xs uppercase tracking-widest text-gray-500 mb-1">Time Out (Optional)</label>
-                      <input type="time" className="w-full bg-black border border-[#333] text-white p-3 focus:outline-none focus:border-[#d4af37]" />
+                      <select className="w-full bg-black border border-[#333] text-white p-3 focus:outline-none focus:border-[#d4af37]">
+                        <option value="">Select a time</option>
+                        {TIME_SLOTS.map(t => <option key={t} value={t}>{t}</option>)}
+                      </select>
                     </div>
                   </div>
                   <button type="submit" className="w-full bg-[#d4af37] text-black py-4 uppercase tracking-widest font-bold mt-4 hover:bg-white transition-all">

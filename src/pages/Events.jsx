@@ -3,6 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { FaBuilding, FaUsers, FaClock, FaTimes, FaCheckCircle, FaCalendarAlt } from 'react-icons/fa';
 import { images } from '../data/assets';
 
+const TIME_SLOTS = [
+  '07:00','08:00','09:00','10:00','11:00','12:00',
+  '13:00','14:00','15:00','16:00','17:00','18:00',
+  '19:00','20:00','21:00','22:00','23:00',
+];
+
 function Events({ role = 'admin' }) {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('venues');
@@ -132,7 +138,10 @@ function Events({ role = 'admin' }) {
                     </div>
                     <div>
                       <label className="block text-xs uppercase tracking-widest text-gray-500 mb-1">Time</label>
-                      <input type="time" required className="w-full bg-black border border-[#333] text-white p-3 focus:outline-none focus:border-[#d4af37]" />
+                      <select required className="w-full bg-black border border-[#333] text-white p-3 focus:outline-none focus:border-[#d4af37]">
+                        <option value="">Select a time</option>
+                        {TIME_SLOTS.map(t => <option key={t} value={t}>{t}</option>)}
+                      </select>
                     </div>
                   </div>
                   <button type="submit" className="w-full bg-[#d4af37] text-black py-4 uppercase tracking-widest font-bold mt-4 hover:bg-white transition-all">

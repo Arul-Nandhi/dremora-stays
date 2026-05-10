@@ -19,8 +19,9 @@ const TIME_SLOTS = [
 
 function GuestRestaurant() {
   const [tableType, setTableType] = useState('standard');
-  const [form, setForm]           = useState({ name: '', phone: '', guests: '2', date: '', time: '', notes: '' });
+  const [form, setForm]           = useState({ name: '', email: '', phone: '', guests: '2', date: '', time: '', notes: '' });
   const [submitted, setSubmitted] = useState(false);
+  const [bookingId, setBookingId] = useState('');
   const [errors, setErrors]       = useState({});
 
   const validate = () => {
@@ -37,8 +38,10 @@ function GuestRestaurant() {
     const errs = validate();
     if (Object.keys(errs).length) { setErrors(errs); return; }
     setErrors({});
+    const newBookingId = 'ORD-' + Math.floor(100000 + Math.random() * 900000);
+    setBookingId(newBookingId);
     setSubmitted(true);
-    setTimeout(() => { setSubmitted(false); setForm({ name:'', phone:'', guests:'2', date:'', time:'', notes:'' }); setTableType('standard'); }, 5000);
+    setTimeout(() => { setSubmitted(false); setForm({ name:'', email:'', phone:'', guests:'2', date:'', time:'', notes:'' }); setTableType('standard'); setBookingId(''); }, 7000);
   };
 
   const today = new Date().toISOString().split('T')[0];
@@ -108,8 +111,12 @@ function GuestRestaurant() {
 
           {/* Success banner */}
           {submitted && (
-            <div className="mb-6 p-4 border border-[#d4af37]/50 bg-[#d4af37]/10 rounded-sm text-[#d4af37] text-sm flex items-center gap-3">
-              <FaCheck /> Your reservation has been submitted! We will contact you to confirm shortly.
+            <div className="mb-6 p-5 border border-emerald-500/50 bg-emerald-900/20 rounded-sm text-emerald-400 text-sm flex flex-col gap-2">
+              <div className="flex items-center gap-3 font-bold text-base">
+                <FaCheck /> Booked Successfully!
+              </div>
+              <p>Your table has been reserved. Booking ID: <strong className="text-white">{bookingId}</strong></p>
+              <p>A confirmation email has been sent to <strong className="text-white">{form.email || 'your email'}</strong>.</p>
             </div>
           )}
 
@@ -124,6 +131,19 @@ function GuestRestaurant() {
                 className="w-full bg-[#111] border border-[#333] text-white px-4 py-3 rounded-sm text-sm focus:outline-none focus:border-[#d4af37] transition-colors placeholder-gray-600"
               />
               {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name}</p>}
+            </div>
+
+            {/* Email */}
+            <div>
+              <label className="block text-gray-400 text-[10px] uppercase tracking-widest mb-2">Email Address *</label>
+              <input
+                type="email"
+                required
+                value={form.email}
+                onChange={e => setForm({...form, email: e.target.value})}
+                placeholder="your@email.com"
+                className="w-full bg-[#111] border border-[#333] text-white px-4 py-3 rounded-sm text-sm focus:outline-none focus:border-[#d4af37] transition-colors placeholder-gray-600"
+              />
             </div>
 
             {/* Phone */}

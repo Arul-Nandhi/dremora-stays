@@ -46,7 +46,7 @@ function Login({ setRole }) {
           </div>
           <div className="mt-12">
             <p className="text-gray-400 font-light tracking-wide text-lg border-l-2 border-[#d4af37] pl-6 py-2">
-              Sign in to manage your reservations, explore exclusive suites, and tailor your ultimate getaway at DREMORE STAYS.
+              Sign in to manage your reservations, explore exclusive suites, and tailor your ultimate getaway at DREMORA STAYS.
             </p>
           </div>
         </div>
@@ -77,7 +77,7 @@ function Login({ setRole }) {
             <p className="text-gray-500 text-sm tracking-wide">
               {isLogin 
                 ? 'Enter your credentials to access your account.' 
-                : 'Join DREMORE STAYS for an unforgettable experience.'}
+                : 'Join DREMORA STAYS for an unforgettable experience.'}
             </p>
           </div>
 
@@ -108,7 +108,7 @@ function Login({ setRole }) {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full bg-[#111] border border-[#333] text-white rounded-md pl-12 pr-4 py-3 focus:outline-none focus:border-[#d4af37] transition-colors placeholder-gray-600"
-                  placeholder="user@dremorestays.com"
+                  placeholder="user@dremorastays.com"
                   required
                 />
               </div>

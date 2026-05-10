@@ -38,11 +38,11 @@ const HALLS_DATA = [
 
 const SEED_REVIEWS = [
   { name: 'Arjun Mehta',   role: 'Business Traveler', img: images.guests[0], rating: 5,   text: 'An extraordinary experience from check-in to checkout. The attention to detail and personalised service made my business trip feel like a luxury retreat.' },
-  { name: 'Priya Sharma',  role: 'Honeymoon Guest',   img: images.guests[1], rating: 5,   text: 'Our honeymoon at Dremore Stays was nothing short of magical. The ambiance, the cuisine, and the spa — everything was absolutely perfect.' },
+  { name: 'Priya Sharma',  role: 'Honeymoon Guest',   img: images.guests[1], rating: 5,   text: 'Our honeymoon at Dremora Stays was nothing short of magical. The ambiance, the cuisine, and the spa — everything was absolutely perfect.' },
   { name: 'David Laurent', role: 'Family Vacation',   img: images.guests[2], rating: 4.5, text: 'We travelled with our kids and the staff went above and beyond to make everyone comfortable. The rooms were spacious and the pool area was fantastic.' },
-  { name: 'Sneha Iyer',    role: 'Weekend Getaway',   img: images.guests[3], rating: 5,   text: 'From the grand lobby to the rooftop lounge, every corner of Dremore Stays exudes elegance. I have already booked my next visit!' },
+  { name: 'Sneha Iyer',    role: 'Weekend Getaway',   img: images.guests[3], rating: 5,   text: 'From the grand lobby to the rooftop lounge, every corner of Dremora Stays exudes elegance. I have already booked my next visit!' },
   { name: 'Rajesh Nair',   role: 'Corporate Event',   img: images.guests[4], rating: 4.5, text: 'We hosted our annual conference here and the banquet facilities were world-class. The AV setup and catering exceeded all expectations.' },
-  { name: 'Ananya Reddy',  role: 'Solo Traveler',     img: images.guests[5], rating: 5,   text: 'As a solo traveler, safety and comfort are my priorities. Dremore delivered on both, plus the restaurant serves the best biryani I have ever had!' },
+  { name: 'Ananya Reddy',  role: 'Solo Traveler',     img: images.guests[5], rating: 5,   text: 'As a solo traveler, safety and comfort are my priorities. Dremora delivered on both, plus the restaurant serves the best biryani I have ever had!' },
 ];
 
 function StarRatingInput({ value, onChange }) {
@@ -224,6 +224,18 @@ function Landing() {
     setReviews(prev => [{ name: reviewForm.name, role: reviewForm.role || 'Valued Guest', img: images.guests[Math.floor(Math.random() * images.guests.length)], rating: reviewForm.rating, text: reviewForm.text }, ...prev]);
     setReviewSuccess(true);
     setTimeout(() => { setReviewModal(false); setReviewSuccess(false); setReviewForm({ name:'', role:'', rating:0, text:'' }); setReviewError(''); }, 1800);
+  };
+
+  const handleContactSubmit = (e) => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const name = fd.get('name');
+    const email = fd.get('email');
+    const subject = fd.get('subject');
+    const message = fd.get('message');
+    // Change this email ID later to your created mail ID
+    const targetEmail = 'info@dremorastays.com'; 
+    window.location.href = `mailto:${targetEmail}?subject=${encodeURIComponent(subject || 'Inquiry from ' + name)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
   };
 
   const SERVICES = [
@@ -438,42 +450,42 @@ function Landing() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div className="contact-glass rounded-xl p-8 md:p-10">
               <h4 className="text-xl font-serif text-[#d4af37] mb-6">Send Us a Message</h4>
-              <form onSubmit={(e) => e.preventDefault()} className="space-y-5">
+              <form onSubmit={handleContactSubmit} className="space-y-5">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="text-gray-400 text-xs uppercase tracking-widest mb-2 block font-semibold">Your Name</label>
-                    <input type="text" placeholder="John Doe" className="contact-input w-full px-4 py-3 rounded-sm text-sm" />
+                    <input type="text" name="name" required placeholder="John Doe" className="contact-input w-full px-4 py-3 rounded-sm text-sm" />
                   </div>
                   <div>
                     <label className="text-gray-400 text-xs uppercase tracking-widest mb-2 block font-semibold">Email Address</label>
-                    <input type="email" placeholder="john@example.com" className="contact-input w-full px-4 py-3 rounded-sm text-sm" />
+                    <input type="email" name="email" required placeholder="john@example.com" className="contact-input w-full px-4 py-3 rounded-sm text-sm" />
                   </div>
                 </div>
                 <div>
                   <label className="text-gray-400 text-xs uppercase tracking-widest mb-2 block font-semibold">Subject</label>
-                  <input type="text" placeholder="How can we help?" className="contact-input w-full px-4 py-3 rounded-sm text-sm" />
+                  <input type="text" name="subject" required placeholder="How can we help?" className="contact-input w-full px-4 py-3 rounded-sm text-sm" />
                 </div>
                 <div>
                   <label className="text-gray-400 text-xs uppercase tracking-widest mb-2 block font-semibold">Message</label>
-                  <textarea rows="5" placeholder="Tell us about your inquiry..." className="contact-input w-full px-4 py-3 rounded-sm text-sm resize-none" />
+                  <textarea name="message" required rows="5" placeholder="Tell us about your inquiry..." className="contact-input w-full px-4 py-3 rounded-sm text-sm resize-none" />
                 </div>
                 <button type="submit" className="gold-btn px-8 py-3.5 rounded-sm text-sm tracking-widest w-full md:w-auto">Send Message</button>
               </form>
             </div>
             <div className="flex flex-col gap-4">
               {[
-                { icon: <FaMapMarkerAlt />, title: 'Our Location', info: '431, Palladam, Coimbatore — 641401, Tamil Nadu, India' },
-                { icon: <FaPhoneAlt />,     title: 'Call Us',       info: '+91 6346 961 630' },
-                { icon: <FaEnvelope />,     title: 'Email Us',      info: 'info@dremorestays.com' },
-                { icon: <FaClock />,        title: 'Working Hours', info: '24 / 7 — Front Desk Always Available' },
+                { icon: <FaMapMarkerAlt />, title: 'Our Location', info: '431, Palladam, Coimbatore — 641401', href: 'https://maps.google.com/?q=431,+Palladam,+Coimbatore+-+641401' },
+                { icon: <FaPhoneAlt />,     title: 'Call Us',       info: '+91 6346 961 630', href: 'tel:+916346961630' },
+                { icon: <FaEnvelope />,     title: 'Email Us',      info: 'info@dremorastays.com', href: 'mailto:info@dremorastays.com' },
+                { icon: <FaClock />,        title: 'Working Hours', info: '24 / 7 — Front Desk Always Available', href: '#' },
               ].map((item, i) => (
-                <div key={i} className="contact-glass rounded-xl p-5 flex items-start gap-4 group hover:border-[#d4af37]/40 transition-all">
+                <a key={i} href={item.href} target={item.href.startsWith('http') ? '_blank' : undefined} rel="noreferrer" className="contact-glass rounded-xl p-5 flex items-start gap-4 group hover:border-[#d4af37]/40 transition-all">
                   <span className="text-[#d4af37] text-lg mt-1 shrink-0 group-hover:scale-110 transition-transform">{item.icon}</span>
                   <div>
                     <h6 className="text-white font-semibold text-sm mb-1">{item.title}</h6>
                     <p className="text-gray-400 text-sm font-light">{item.info}</p>
                   </div>
-                </div>
+                </a>
               ))}
               <div className="contact-glass rounded-xl p-6 mt-auto">
                 <h6 className="text-white font-semibold text-sm mb-4">Follow Us</h6>
@@ -494,11 +506,16 @@ function Landing() {
             </div>
           </div>
           {/* Map */}
-          <div className="mt-12 map-embed h-64 flex items-center justify-center bg-[#0a0a0a]">
-            <div className="text-center">
-              <FaMapMarkerAlt className="text-[#d4af37]/30 text-4xl mx-auto mb-3" />
-              <p className="text-gray-500 text-sm font-light">Interactive Map — 431, Palladam, Coimbatore</p>
-            </div>
+          <div className="mt-12 map-embed h-96 w-full rounded-xl overflow-hidden bg-[#0a0a0a]">
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3916.634354508608!2d77.291771!3d10.990928!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba9aa13c121e7d9%3A0xcb1b51e94cc75b7b!2sPalladam%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1715360000000!5m2!1sen!2sin" 
+              width="100%" 
+              height="100%" 
+              style={{ border: 0 }} 
+              allowFullScreen="" 
+              loading="lazy" 
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
           </div>
         </div>
       </div>
