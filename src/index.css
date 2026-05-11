@@ -493,3 +493,11 @@
   transform: translateY(-6px);
   box-shadow: 0 24px 48px rgba(0,0,0,0.5), 0 0 40px rgba(212,175,55,0.07);
 }
+
+.sidebar-link {
+  text-decoration: none;
+  @apply px-4 py-3 rounded-xl border border-amber-200 text-amber-200 
+  font-medium transition-all duration-300 
+  hover:bg-amber-400 hover:text-black 
+  hover:translate-x-1 hover:shadow-lg;
+}
