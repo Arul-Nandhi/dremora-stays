@@ -80,7 +80,7 @@ function Sidebar() {
       <div className="p-4 border-t border-gray-700">
         <button
           onClick={logout}
-          className="w-full bg-red-500 hover:bg-red-600 transition p-2 rounded text-sm"
+          className="w-full border-2 border-amber-200 hover:bg-amber-400 hover:text-black transition p-2 rounded text-sm"
         >
           Logout
         </button>

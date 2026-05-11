@@ -37,7 +37,7 @@ function Login() {
       <div className="w-full max-w-md bg-white/5 backdrop-blur-xl border border-[#d4af37]/30 rounded-2xl p-8 shadow-2xl">
 
         {/* Title */}
-        <h2 className="text-3xl font-serif text-center text-[#d4af37] mb-8 tracking-wide">
+        <h2 className="text-3xl font-serif text-center text-white mb-8 tracking-wide">
           HMS Login
         </h2>
 
