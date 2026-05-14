@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import Sidebar from "../../components/Sidebar";
+import Sidebar from "../../components/sidebar";
 import Employees from "./Employees";
 import Shifts from "./Shifts";
 import Attendance from "./Attendance";
